@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.uppy-Container {
+  border-color: yellow !important;
+  border: 2px;
+
+  padding: 2px !important;
+
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.uppy-Dashboard-inner {
+  background-color: #1f2937 !important;
+}
+
+[data-uppy-theme="dark"] .uppy-Dashboard-AddFiles {
+  border-color: yellow !important;
+}
+.uppy-DashboardTab-inner {
+  background-color: #f1f5f9 !important;
+}
+.uppy-Dashboard-inner {
+  border: 1px solid #ffbe00;
+}
+
+[data-uppy-theme="dark"] .uppy-Dashboard-browse {
+  color: #ffbe00;
+}
+
+[data-uppy-theme="dark"] .uppy-DashboardTab-iconMyDevice {
+  color: #ffbe00;
+}
+
+[data-uppy-theme="dark"] .uppy-Dashboard-dropFilesHereHint {
+  border-color: #ffbe00;
+  color: #bbb;
+}
+
+[data-uppy-theme="dark"] .uppy-Dashboard-Item-action {
+  color: #ffbe00;
+}
+
+[data-uppy-theme="dark"] .uppy-DashboardContent-bar {
+  background-color: #1f2937;
+  border-bottom: 1px solid #ffbe00;
+}
+
+[data-uppy-theme="dark"] .uppy-DashboardContent-back,
+[data-uppy-theme="dark"] .uppy-DashboardContent-save {
+  color: #ffbe00;
+}
+
+[data-uppy-theme="dark"] .uppy-DashboardContent-addMore {
+  color: #ffbe00;
+}
+
+[data-uppy-theme="dark"]
+  .uppy-StatusBar.is-waiting
+  .uppy-StatusBar-actionBtn--upload {
+  background-color: #ffbe00;
+}
+
+a.uppy-Dashboard-poweredBy {
+  display: none;
+}
