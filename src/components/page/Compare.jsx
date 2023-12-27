@@ -40,16 +40,13 @@ const Compare = () => {
             .create({ imageOrginale: currentFile.data });
           await localforage.setItem("fileOrgID", fileOrginale.id);
           await localforage.setItem("fileOrgSize", currentFile.size);
-          // mutate("getFileToCompare");
+        } else {
+          const fileOrginale = await pb
+            .collection("compare")
+            .create({ imageOrginale: currentFile.data });
+          await localforage.setItem("fileOrgID", fileOrginale.id);
+          await localforage.setItem("fileOrgSize", currentFile.size);
         }
-        console.log("tay 2");
-        console.log(currentFile.data);
-        const fileOrginale = await pb
-          .collection("compare")
-          .create({ imageOrginale: currentFile.data });
-        await localforage.setItem("fileOrgID", fileOrginale.id);
-        await localforage.setItem("fileOrgSize", currentFile.size);
-        // mutate("getFileToCompare");
       })();
     },
     restrictions: {
