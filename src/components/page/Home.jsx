@@ -30,10 +30,9 @@ const Home = () => {
               </p>
               <p className="mt-4 text-slate-100">
                 Optimize your images effortlessly for free, offering
-                high-quality compression without any compromise on visuals.And
-                Transform your images , all-in-one software that combines
-                powerful editing tools and efficient compression technology for
-                optimal visual results.
+                high-quality compression without any compromise on visuals.
+                Combines powerful editing tools and efficient compression
+                technology for optimal visual results.
               </p>
 
               <Link to="/compare" className="btn btn-warning btn-md mt-6">
