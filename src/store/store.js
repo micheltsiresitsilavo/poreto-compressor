@@ -34,6 +34,22 @@ export const setInitialData = async () => {
   }
   return isData;
 };
+export const setInitiaFileOrgID = async () => {
+  const isfileOrgID = await localforage.getItem("fileOrgID");
+  if (!isfileOrgID) {
+    await localforage.setItem("fileOrgID", null);
+  }
+  return isfileOrgID;
+};
+
+export const setInitial = async (nameData) => {
+  const isData = await localforage.getItem(nameData);
+  if (!isData) {
+    await localforage.setItem(nameData, 0);
+  }
+  return isData;
+};
+
 /*
  *#state
  */
@@ -43,16 +59,14 @@ export const stateStore = proxy({
   me: setInitialMe(),
   theme: "",
   deviceID: deviceIDInit(),
+  fileOrgID: setInitiaFileOrgID(),
+  fileOrgSize: setInitial("fileOrgSize"),
+  fileCompSize: setInitial("fileCompSize"),
 });
 
 /*
  *#action
  */
-
-// export const setSettings = async (isActivate) => {
-//   const response = await localforage.setItem("settings", isActivate);
-//   stateStore.settings = response;
-// };
 
 export const setData = async (data) => {
   const response = await localforage.setItem("data", data);

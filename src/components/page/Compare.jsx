@@ -35,7 +35,15 @@ const Compare = () => {
         const fileOrgID = await localforage.getItem("fileOrgID");
         if (fileOrgID) {
           await pb.collection("compare").delete(fileOrgID);
+          const fileOrginale = await pb
+            .collection("compare")
+            .create({ imageOrginale: currentFile.data });
+          await localforage.setItem("fileOrgID", fileOrginale.id);
+          await localforage.setItem("fileOrgSize", currentFile.size);
+          // mutate("getFileToCompare");
         }
+        console.log("tay 2");
+        console.log(currentFile.data);
         const fileOrginale = await pb
           .collection("compare")
           .create({ imageOrginale: currentFile.data });
@@ -82,16 +90,6 @@ const Compare = () => {
       }
     };
 
-    (async () => {
-      const orgFile = await localforage.getItem("compareFileOrg");
-      const compressedFile = await localforage.getItem("compareFileComp");
-      const compressRatio = (
-        100 -
-        (compressedFile.size / orgFile.size) * 100
-      ).toFixed(1);
-      console.log(compressRatio);
-    })();
-
     window.addEventListener("resize", handleWindowResize);
 
     return () => {
@@ -100,7 +98,7 @@ const Compare = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-auto">
+    <div>
       {data?.compressRatio ? (
         <div className="text-xl py-4 flex justify-center items-center">
           <p>
@@ -112,62 +110,64 @@ const Compare = () => {
         ""
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 py-4 px-2 ">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className=""
-        >
-          <div className="">
-            <Dashboard
-              uppy={compareUppy}
-              plugins={["Webcam", "ImageEditor", "Compressor"]}
-              width={widthDash} //600 629
-              height={340}
-              showProgressDetails={true}
-              theme="auto"
-            />
-            <ProgressBar uppy={compareUppy} hideAfterFinish={false} />
-            <div id="informer"></div>
+      <div className="flex justify-center items-center h-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-1 py-4 px-2 ">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className=""
+          >
+            <div className="">
+              <Dashboard
+                uppy={compareUppy}
+                plugins={["Webcam", "ImageEditor", "Compressor"]}
+                width={widthDash} //600 629
+                height={340}
+                showProgressDetails={true}
+                theme="auto"
+              />
+              <ProgressBar uppy={compareUppy} hideAfterFinish={false} />
+              <div id="informer"></div>
+            </div>
+          </motion.div>{" "}
+          <div className="px-2 md:px-0 ">
+            {!data?.fileOrgSize && !data?.fileCompSize ? (
+              <div className="diff aspect-[16/9] px-4 rounded-md border border-warning py-2 ">
+                <div className="diff-item-1 ">
+                  <div className="  bg-warning text-primary-content text-9xl font-black grid place-content-center ">
+                    WOZ
+                  </div>
+                </div>
+                <div className="diff-item-2">
+                  <div className="bg-base-200 text-9xl font-black grid place-content-center">
+                    WOZ
+                  </div>
+                </div>
+                <div className="diff-resizer"></div>
+              </div>
+            ) : (
+              <div className="diff aspect-[16/9] px-4 rounded-md border border-warning py-2 ">
+                <div className="diff-item-1 relative">
+                  <img
+                    src={`${endPoint}/api/files/${data?.resImage?.collectionId}/${data?.resImage?.id}/${data?.resImage?.imageOrginale}`}
+                  />
+                  <div className=" text-center bg-gray-800/80 px-4 text-xl py-2 absolute font-bold text-red-500  rounded-md  w-32 h-12 ">
+                    {filesize(data?.fileOrgSize, { standard: "jedec" })}
+                  </div>
+                </div>
+                <div className="diff-item-2 relative">
+                  <img
+                    src={`${endPoint}/api/files/${data?.resImage?.collectionId}/${data?.resImage?.id}/${data?.resImage?.imageCompressed}`}
+                  />
+                  <div className="bg-gray-800/80 px-4 text-xl py-2 absolute font-bold text-warning  rounded-md   w-32 h-12">
+                    {filesize(data?.fileCompSize, { standard: "jedec" })}
+                  </div>
+                </div>
+                <div className="diff-resizer"></div>
+              </div>
+            )}
           </div>
-        </motion.div>{" "}
-        <div className="px-2 md:px-0 ">
-          {!data?.fileOrgSize && !data?.fileCompSize ? (
-            <div className="diff aspect-[16/9] px-4 rounded-md border border-warning py-2 ">
-              <div className="diff-item-1 ">
-                <div className="  bg-warning text-primary-content text-9xl font-black grid place-content-center ">
-                  WOZ
-                </div>
-              </div>
-              <div className="diff-item-2">
-                <div className="bg-base-200 text-9xl font-black grid place-content-center">
-                  WOZ
-                </div>
-              </div>
-              <div className="diff-resizer"></div>
-            </div>
-          ) : (
-            <div className="diff aspect-[16/9] px-4 rounded-md border border-warning py-2 ">
-              <div className="diff-item-1 relative">
-                <img
-                  src={`${endPoint}/api/files/${data?.resImage?.collectionId}/${data?.resImage?.id}/${data?.resImage?.imageOrginale}`}
-                />
-                <div className=" text-center bg-gray-800/80 px-4 text-xl py-2 absolute font-bold text-red-500  rounded-md  w-32 h-12 ">
-                  {filesize(data?.fileOrgSize, { standard: "jedec" })}
-                </div>
-              </div>
-              <div className="diff-item-2 relative">
-                <img
-                  src={`${endPoint}/api/files/${data?.resImage?.collectionId}/${data?.resImage?.id}/${data?.resImage?.imageCompressed}`}
-                />
-                <div className="bg-gray-800/80 px-4 text-xl py-2 absolute font-bold text-warning  rounded-md   w-32 h-12">
-                  {filesize(data?.fileCompSize, { standard: "jedec" })}
-                </div>
-              </div>
-              <div className="diff-resizer"></div>
-            </div>
-          )}
         </div>
       </div>
     </div>
