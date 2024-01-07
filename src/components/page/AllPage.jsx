@@ -9,7 +9,6 @@ import { saveAs } from "file-saver";
 const AllPage = () => {
   const endPoint = import.meta.env.VITE_BASE_URL;
   const { data, isLoading } = useGetAll();
-  console.log(data);
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -77,7 +76,7 @@ const AllPage = () => {
                     </div>
                   ) : (
                     <div className="grid grid-cols-4 space-y-1 sm:grid-cols-4 space-x-2 items-center">
-                      {item.images.map((image, key) => (
+                      {item.images.map((image) => (
                         <div key={item.id} className="relative">
                           <img
                             src={`${endPoint}/api/files/${item.collectionId}/${item.id}/${image}`}

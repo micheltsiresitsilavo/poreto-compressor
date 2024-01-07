@@ -38,11 +38,16 @@ const Test = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-1 space-y-2 space-x-2 ">
       <div className="h-auto order-last md:order-first  max-w-3xl bg-gray-100 dark:bg-gray-800 shadow-xl py-1  rounded-lg ">
-        <div className="px-2 border-b border-warning py-2">
-          <button className="btn btn-warning btn-md" onClick={() => ziper()}>
-            Download all ({data?.length} files)
-          </button>
-        </div>
+        {!data || data?.length === 0 ? (
+          <div></div>
+        ) : (
+          <div className="px-2 border-b border-warning py-2">
+            <button className="btn btn-warning btn-md" onClick={() => ziper()}>
+              Download all ({data?.length} files)
+            </button>
+          </div>
+        )}
+
         <div className="flex-col">
           {data
             ?.map((item) => (

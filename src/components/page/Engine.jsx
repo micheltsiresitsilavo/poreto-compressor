@@ -87,10 +87,10 @@ const Engine = () => {
     .use(Webcam)
     .use(Compressor, {
       id: "compressor",
-      quality: 0.5,
+      quality: 0.4,
     })
     .use(ImageEditor, {
-      quality: 0.7,
+      quality: 0.4,
     })
 
     .use(Informer, { id: "Informer" })

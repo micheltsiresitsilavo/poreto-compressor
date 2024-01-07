@@ -22,7 +22,7 @@ export const setInitialMe = async () => {
 export const deviceIDInit = async () => {
   const deviceID = await localforage.getItem("deviceID");
   if (!deviceID) {
-    await localforage.setItem("deviceID", Uuid());
+    return await localforage.setItem("deviceID", Uuid());
   }
   return deviceID;
 };
@@ -30,14 +30,14 @@ export const deviceIDInit = async () => {
 export const setInitialData = async () => {
   const isData = await localforage.getItem("data");
   if (!isData) {
-    await localforage.setItem("data", []);
+    return await localforage.setItem("data", []);
   }
   return isData;
 };
 export const setInitiaFileOrgID = async () => {
   const isfileOrgID = await localforage.getItem("fileOrgID");
   if (!isfileOrgID) {
-    await localforage.setItem("fileOrgID", null);
+    return await localforage.setItem("fileOrgID", null);
   }
   return isfileOrgID;
 };
